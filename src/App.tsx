@@ -1,13 +1,14 @@
-import styles from './App.module.css';
+import { Content } from './components/Content';
+import { Header } from './components/Header';
 
 import './global.css';
 
 export function App() {
   return (
     <>
-      <h1 className={styles.h1}>Hello world!</h1>
+      <Header />
 
-      <a href="#">Teste</a>
+      <Content />
     </>
   )
 }

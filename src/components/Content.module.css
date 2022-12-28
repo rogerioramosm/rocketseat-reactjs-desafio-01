@@ -1,0 +1,38 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+form {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 736px;
+}
+
+form input {
+  width: 638px;
+  height: 54px;
+  padding: 1rem;
+  background-color: var(--gray-500);
+  border: 1px solid var(--gray-700);
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--gray-300);
+}
+
+form button {
+  width: 90px;
+  height: 54px;
+  background-color: var(--blue-dark);
+  color: var(--gray-100);
+
+}
+
+.taskList {
+  width: 736px;
+  background-color: red;
+  
+}
