@@ -1,21 +1,32 @@
-import { FormEvent } from 'react';
+/** Componentes react e externos */
+import { FormEvent, useState } from 'react';
 import { PlusCircle, ClipboardText } from 'phosphor-react';
 
-import styles from './Content.module.css';
+/** Componentes próprios */
 import { Tasks } from './Tasks';
+import { TaskEmpty } from './TaskEmpty';
 
-const tasksToDo = [
+/** Estilo CSS */
+import styles from './Content.module.css';
+
+interface TasksList {
+  id: number,
+  message: string
+}
+
+const taskList: TasksList[] = [
   {
     id: 1,
-    content: "Primeira tarefa"
-  },
-  {
+    message: "Integer urna interdum massa libero auctor neque turpis turpis semper. Duis vel sed fames integer."
+  }, {
     id: 2,
-    content: "Segunta tarefa"
+    message: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laudantium dignissimos magnam et vel iste similique doloremque minus quam magni quidem. Reiciendis, accusamus odit laborum amet earum commodi aspernatur iure ab."
   }
 ]
 
 export function Content() {
+  const [tasks, setTasks] = useState(taskList);
+
   function handleCreateTask(event: FormEvent) {
     event.preventDefault();
 
@@ -36,7 +47,7 @@ export function Content() {
         <div className={styles.taskInfo}>
           <div>
             Tarefas criadas
-            <span>{tasksToDo.length}</span>
+            <span>0</span>
           </div>
           <div>
             Concluídas
@@ -44,26 +55,10 @@ export function Content() {
           </div>
         </div>
 
-        {tasksToDo.map(task => {
-          if (!task.content) {
-            return (
-              <Tasks key={task.id} />
-            )
-          } else {
-            return (
-              <div className={styles.taskEmpty}>
-                <ClipboardText />
-                <p>
-                  Você ainda não tem tarefas cadastradas
-                </p>
-                <span>
-                  Crie tarefas e organize seus itens a fazer
-                </span>
-              </div>
-            )
-          }
-        })}
-
+        {tasks.length === 0
+          ? <TaskEmpty />
+          : tasks.map(task => <Tasks key={task.id} message={task.message} />)
+        }
       </section>
     </main>
 
