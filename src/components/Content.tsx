@@ -1,6 +1,6 @@
 /** Componentes react e externos */
-import { FormEvent, useState } from 'react';
-import { PlusCircle, ClipboardText } from 'phosphor-react';
+import { ChangeEvent, InvalidEvent, FormEvent, useState } from 'react';
+import { PlusCircle } from 'phosphor-react';
 
 /** Componentes próprios */
 import { Tasks } from './Tasks';
@@ -9,35 +9,60 @@ import { TaskEmpty } from './TaskEmpty';
 /** Estilo CSS */
 import styles from './Content.module.css';
 
-interface TasksList {
+interface TaskList {
   id: number,
   message: string
 }
 
-const taskList: TasksList[] = [
-  {
-    id: 1,
-    message: "Integer urna interdum massa libero auctor neque turpis turpis semper. Duis vel sed fames integer."
-  }, {
-    id: 2,
-    message: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laudantium dignissimos magnam et vel iste similique doloremque minus quam magni quidem. Reiciendis, accusamus odit laborum amet earum commodi aspernatur iure ab."
-  }
-]
-
 export function Content() {
-  const [tasks, setTasks] = useState(taskList);
+  const taskList: TaskList[] = [];
 
+  const [tasks, setTasks] = useState(taskList);
+  const [taskMessage, setTaskMessage] = useState('');
+  const [countTasks, setCountTasks] = useState(0);
+
+  /** Cadastra novas tarefas */
   function handleCreateTask(event: FormEvent) {
     event.preventDefault();
 
-    console.log('Clicou em criar!')
+    setTasks([...tasks, {
+      id: countTasks,
+      message: taskMessage
+    }]);
+
+    /** Reset de texto */
+    setTaskMessage('');
+
+    /** Counta tasks */
+    setCountTasks((tasks) => tasks + 1)
+  }
+
+  /** Personaliza mensagem do required do input */
+  function handleNewTaskEmpty(event: InvalidEvent<HTMLInputElement>) {
+    event.target.setCustomValidity(
+      'Este campo é obrigatório. Preencha para cadastrar nova tarefea!'
+    );
+  }
+
+  /** Ao pressionar as letras no input, adiciona as mesmas no estado */
+  function handleNewTaskMessage(event: ChangeEvent<HTMLInputElement>) {
+    event.target.setCustomValidity('');
+    setTaskMessage(event.target.value);
   }
 
   return (
     <main className={styles.content}>
       <form onSubmit={handleCreateTask}>
-        <input type="search" placeholder='Adicione uma nova tarefa' />
-        <button type="submit">
+        <input
+          type="text"
+          value={taskMessage}
+          onChange={handleNewTaskMessage}
+          onInvalid={handleNewTaskEmpty}
+          placeholder='Adicione uma nova tarefa'
+          autoFocus
+          required
+        />
+        <button>
           Criar
           <PlusCircle size={18} />
         </button>
@@ -47,15 +72,16 @@ export function Content() {
         <div className={styles.taskInfo}>
           <div>
             Tarefas criadas
-            <span>0</span>
+            <span>{countTasks}</span>
           </div>
           <div>
             Concluídas
+            {/* 2 de 5 */}
             <span>0</span>
           </div>
         </div>
 
-        {tasks.length === 0
+        {countTasks === 0
           ? <TaskEmpty />
           : tasks.map(task => <Tasks key={task.id} message={task.message} />)
         }

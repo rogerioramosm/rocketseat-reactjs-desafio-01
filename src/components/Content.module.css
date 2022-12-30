@@ -14,7 +14,7 @@ form {
   margin-bottom: 64px;
 }
 
-form input[type="search"] {
+form input[type="text"] {
   width: 638px;
   height: 54px;
   padding: 1rem;
@@ -26,7 +26,7 @@ form input[type="search"] {
   color: var(--gray-300);
 }
 
-form input[type="search"]:focus {
+form input[type="text"]:focus {
   border: 1px solid var(--purple-dark);
   color: var(--gray-100);
 }
