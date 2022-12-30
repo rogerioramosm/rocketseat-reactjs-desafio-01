@@ -7,11 +7,14 @@
 form {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  align-items: center;
+  justify-content: space-between;
   width: 736px;
+  margin: -27px;
+  margin-bottom: 64px;
 }
 
-form input {
+form input[type="search"] {
   width: 638px;
   height: 54px;
   padding: 1rem;
@@ -23,16 +26,64 @@ form input {
   color: var(--gray-300);
 }
 
-form button {
-  width: 90px;
-  height: 54px;
-  background-color: var(--blue-dark);
+form input[type="search"]:focus {
+  border: 1px solid var(--purple-dark);
   color: var(--gray-100);
-
 }
 
-.taskList {
+form button {
+  display: flex;
+  align-items: center;
+  width: 90px;
+  height: 52px;
+  padding: 16px;
+  background-color: var(--blue-dark);
+  color: var(--gray-100);
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+form button svg {
+  margin-left: 8px;
+}
+
+form button:hover {
+  background-color: var(--blue);
+  cursor: pointer;
+}
+
+.taskBox {
+  display: flex;
+  flex-direction: column;
   width: 736px;
-  background-color: red;
-  
+  min-height: 287px;
+  color: var(--gray-300);
+}
+
+.taskInfo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.taskInfo>div {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 17px;
+  color: var(--blue);
+}
+
+.taskInfo span {
+  margin-left: 8px;
+  padding: 2px 8px;
+  background-color: var(--gray-400);
+  color: var(--gray-200);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 15px;
 }
