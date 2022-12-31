@@ -11,7 +11,8 @@ import styles from './Content.module.css';
 
 interface TaskList {
   id: number,
-  message: string
+  message: string,
+  status: boolean
 }
 
 export function Content() {
@@ -27,7 +28,8 @@ export function Content() {
 
     setTasks([...tasks, {
       id: countTasks,
-      message: taskMessage
+      message: taskMessage,
+      status: true
     }]);
 
     /** Reset de texto */
@@ -83,7 +85,13 @@ export function Content() {
 
         {countTasks === 0
           ? <TaskEmpty />
-          : tasks.map(task => <Tasks key={task.id} message={task.message} />)
+          : tasks.map(task =>
+            <Tasks
+              key={task.id}
+              message={task.message}
+              status={task.status}
+            />
+          )
         }
       </section>
     </main>

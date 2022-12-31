@@ -54,6 +54,11 @@
   */
 }
 
+.trashButton{
+  background: transparent;
+  border: 0;
+}
+
 .trashButton svg {
   width: 16px;
   height: 16px;
