@@ -29,7 +29,7 @@ export function Content() {
     setTasks([...tasks, {
       id: countTasks,
       message: taskMessage,
-      status: true
+      status: false
     }]);
 
     /** Reset de texto */
@@ -58,6 +58,20 @@ export function Content() {
 
     setTasks(newTaskWithoutIdDeleted);
     setCountTasks(newTaskWithoutIdDeleted.length);
+  }
+
+  /** Para alterar status da task */
+  function changeStatusTask(id: number) {
+    const newTasksChangedStatus = tasks.reduce((allTaks, task) => {
+      if (task.id === id) {
+        task.status = true;
+      }
+      allTaks.push(task);
+
+      return allTaks;
+    }, []);
+
+    setTasks(newTasksChangedStatus);
   }
 
   return (
@@ -99,6 +113,7 @@ export function Content() {
               id={task.id}
               message={task.message}
               status={task.status}
+              onChangeStatusTask={changeStatusTask}
               onDeleteTask={deleteTask}
             />
           )
