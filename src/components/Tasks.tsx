@@ -1,18 +1,17 @@
 import { Circle, CheckCircle, Trash } from 'phosphor-react';
-import { MouseEvent } from 'react';
 
 import styles from './Tasks.module.css';
 
-interface Message {
+interface Props {
+  id: number
   message: string,
-  status: boolean
+  status: boolean,
+  onDeleteTask: (id: number) => void;
 }
 
-export function Tasks({ message, status }: Message) {
-  function handleDeleteTask(event: MouseEvent<HTMLButtonElement>) {
-    console.log(event)
-
-    return true;
+export function Tasks({ id, message, status, onDeleteTask }: Props) {
+  function handleDeleteTask() {
+    onDeleteTask(id)
   }
 
   return (
@@ -32,11 +31,7 @@ export function Tasks({ message, status }: Message) {
         {message}
       </p>
 
-      <button
-        onClick={handleDeleteTask}
-        className={styles.trashButton}
-        id={message}
-      >
+      <button onClick={handleDeleteTask} className={styles.trashButton}>
         <Trash />
       </button>
     </div>

@@ -52,6 +52,14 @@ export function Content() {
     setTaskMessage(event.target.value);
   }
 
+  /** Para deletar task */
+  function deleteTask(id: number) {
+    const newTaskWithoutIdDeleted = tasks.filter(task => task.id !== id);
+
+    setTasks(newTaskWithoutIdDeleted);
+    setCountTasks(newTaskWithoutIdDeleted.length);
+  }
+
   return (
     <main className={styles.content}>
       <form onSubmit={handleCreateTask}>
@@ -88,8 +96,10 @@ export function Content() {
           : tasks.map(task =>
             <Tasks
               key={task.id}
+              id={task.id}
               message={task.message}
               status={task.status}
+              onDeleteTask={deleteTask}
             />
           )
         }
