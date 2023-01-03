@@ -1,6 +1,7 @@
 /** Componentes react e externos */
 import { ChangeEvent, InvalidEvent, FormEvent, useState } from 'react';
 import { PlusCircle } from 'phosphor-react';
+import { v4 as uuidv4 } from 'uuid';
 
 /** Componentes próprios */
 import { Tasks } from './Tasks';
@@ -10,15 +11,13 @@ import { TaskEmpty } from './TaskEmpty';
 import styles from './Content.module.css';
 
 interface TaskList {
-  id: number,
+  id: string,
   message: string,
   status: boolean
 }
 
 export function Content() {
-  const taskList: TaskList[] = [];
-
-  const [tasks, setTasks] = useState(taskList);
+  const [tasks, setTasks] = useState<TaskList[]>([]);
   const [taskMessage, setTaskMessage] = useState('');
   const [countTasks, setCountTasks] = useState(0);
 
@@ -27,7 +26,7 @@ export function Content() {
     event.preventDefault();
 
     setTasks([...tasks, {
-      id: countTasks,
+      id: uuidv4(),
       message: taskMessage,
       status: false
     }]);
@@ -36,7 +35,7 @@ export function Content() {
     setTaskMessage('');
 
     /** Counta tasks */
-    setCountTasks((tasks) => tasks + 1)
+    setCountTasks((count) => count + 1);
   }
 
   /** Personaliza mensagem do required do input */
@@ -53,7 +52,7 @@ export function Content() {
   }
 
   /** Para deletar task */
-  function deleteTask(id: number) {
+  function deleteTask(id: string) {
     const newTaskWithoutIdDeleted = tasks.filter(task => task.id !== id);
 
     setTasks(newTaskWithoutIdDeleted);
@@ -61,18 +60,31 @@ export function Content() {
   }
 
   /** Para alterar status da task */
-  function changeStatusTask(id: number) {
-    const newTasksChangedStatus = tasks.reduce((allTaks, task) => {
+  function changeStatusTask(id: string) {
+    const newTasksChangedStatus = tasks.reduce((allTasks, task) => {
       if (task.id === id) {
-        task.status = true;
+        if (!task.status) {
+          task.status = true;
+        } else {
+          task.status = false;
+        }
       }
-      allTaks.push(task);
+      allTasks.push(task);
 
-      return allTaks;
+      return allTasks;
     }, []);
 
     setTasks(newTasksChangedStatus);
   }
+
+  /** Contar Tasks concluídas */
+  const taskIsComplete = tasks.reduce((allTasks, task) => {
+    if (task.status) {
+      allTasks++;
+    }
+
+    return allTasks;
+  }, 0);
 
   return (
     <main className={styles.content}>
@@ -100,8 +112,11 @@ export function Content() {
           </div>
           <div>
             Concluídas
-            {/* 2 de 5 */}
-            <span>0</span>
+            <span>
+              {countTasks > 0
+                ? `${taskIsComplete} de ${countTasks}`
+                : countTasks}
+            </span>
           </div>
         </div>
 

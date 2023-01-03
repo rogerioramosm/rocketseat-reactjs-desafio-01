@@ -3,11 +3,11 @@ import { Circle, CheckCircle, Trash } from 'phosphor-react';
 import styles from './Tasks.module.css';
 
 interface Props {
-  id: number
+  id: string
   message: string,
   status: boolean,
-  onChangeStatusTask: (id: number) => void,
-  onDeleteTask: (id: number) => void;
+  onChangeStatusTask: (id: string) => void,
+  onDeleteTask: (id: string) => void;
 }
 
 export function Tasks(
