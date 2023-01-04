@@ -5,18 +5,12 @@ import styles from './Tasks.module.css';
 interface Props {
   id: string
   message: string,
-  status: boolean,
+  status: number,
   onChangeStatusTask: (id: string) => void,
   onDeleteTask: (id: string) => void;
 }
 
-export function Tasks(
-  { id,
-    message,
-    status,
-    onChangeStatusTask,
-    onDeleteTask }: Props) {
-
+export function Tasks({ id, message, status, onChangeStatusTask, onDeleteTask }: Props) {
   function handleDeleteTask() {
     onDeleteTask(id);
   }
@@ -27,7 +21,7 @@ export function Tasks(
 
   return (
     <div className={styles.task}>
-      {status === false
+      {status === 0
         ?
         <button onClick={changeStatusTask} className={styles.toCheckButton}>
           <Circle />
@@ -38,7 +32,7 @@ export function Tasks(
         </button>
       }
 
-      {status === false
+      {status === 0
         ?
         <p className={styles.messageToCheck}>
           {message}

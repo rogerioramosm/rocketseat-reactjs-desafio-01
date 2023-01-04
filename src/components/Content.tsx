@@ -13,7 +13,7 @@ import styles from './Content.module.css';
 interface TaskList {
   id: string,
   message: string,
-  status: boolean
+  status: number
 }
 
 export function Content() {
@@ -28,8 +28,8 @@ export function Content() {
     setTasks([...tasks, {
       id: uuidv4(),
       message: taskMessage,
-      status: false
-    }]);
+      status: 0
+    }].sort((first, second) => first.status - second.status));
 
     /** Reset de texto */
     setTaskMessage('');
@@ -61,19 +61,19 @@ export function Content() {
 
   /** Para alterar status da task */
   function changeStatusTask(id: string) {
-    const newTasksChangedStatus = tasks.reduce((allTasks, task) => {
+    const newTasksChangedStatus = tasks.reduce((allTasks: TaskList[], task) => {
       if (task.id === id) {
         if (!task.status) {
-          task.status = true;
+          task.status = 1;
         } else {
-          task.status = false;
+          task.status = 0;
         }
       }
       allTasks.push(task);
 
       return allTasks;
-    }, []);
-
+    }, []).sort((first, second) => first.status - second.status);
+    
     setTasks(newTasksChangedStatus);
   }
 
@@ -135,6 +135,5 @@ export function Content() {
         }
       </section>
     </main>
-
   )
 }
