@@ -8,7 +8,7 @@ Projeto para análise do primeiro módulo do curso `ReactJS - Rockeseat`
 
 Entrega do primeiro `App` em `ReactJS` do desafio do primeiro módulo
 
-<img src=".github/preview.gif" alt="Visualização do App pronto">
+<img src=".github/preview-app.gif" alt="Visualização do App pronto">
 
 ---
 
